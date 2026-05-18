@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import { anonymizeIntegration } from './scripts/anonymize.mjs';
 
 export default defineConfig({
   site: 'https://feroldi.cloud',
@@ -21,6 +22,10 @@ export default defineConfig({
         locales: { it: 'it-IT', en: 'en-US' },
       },
     }),
+    // Runs at the end of every `astro build` — strips framework fingerprints
+    // (chunk filenames, scoped-style data-attributes) so the deployed site
+    // is opaque to Wappalyzer / BuiltWith.
+    anonymizeIntegration(),
   ],
   build: {
     inlineStylesheets: 'auto',
