@@ -1,0 +1,45 @@
+/* ============================================================
+   Ticker — scrolling marquee, decorative
+   ============================================================ */
+.ticker {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.ticker-track {
+  display: flex;
+  gap: 64px;
+  padding: 18px 0;
+  white-space: nowrap;
+  animation: ticker 40s linear infinite;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.ticker-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 64px;
+}
+
+.ticker-track span::after {
+  content: '◆';
+  color: var(--accent);
+  font-size: 8px;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}

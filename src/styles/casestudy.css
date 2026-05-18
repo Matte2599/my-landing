@@ -1,0 +1,241 @@
+/* ============================================================
+   Case study layout — long-form work detail pages
+   ============================================================ */
+.casestudy {
+  padding-top: clamp(120px, 16vh, 180px);
+  max-width: 880px;
+  margin: 0 auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+
+.casestudy-back {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  transition: color 0.2s;
+}
+
+.casestudy-back:hover {
+  color: var(--accent);
+}
+
+.casestudy-header {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 32px 0;
+  margin-bottom: 48px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.casestudy-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.casestudy-title {
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.casestudy-summary {
+  font-size: clamp(16px, 1.4vw, 20px);
+  color: var(--fg-dim);
+  margin-top: 16px;
+  max-width: 60ch;
+}
+
+.casestudy-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--line-2);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.casestudy-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.casestudy-meta-label {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.casestudy-meta-value {
+  color: var(--fg);
+  letter-spacing: 0.04em;
+}
+
+.casestudy-tech-row {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.casestudy-tech-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 8px;
+  border: 1px solid var(--line-2);
+  color: var(--fg-dim);
+}
+
+.casestudy-body {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--fg-dim);
+}
+
+.casestudy-body h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.15;
+  color: var(--fg);
+  margin: 56px 0 16px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.casestudy-body h3 {
+  font-size: clamp(20px, 2.2vw, 24px);
+  margin: 40px 0 12px;
+  color: var(--fg);
+}
+
+.casestudy-body p {
+  margin-bottom: 20px;
+  color: var(--fg-dim);
+}
+
+.casestudy-body strong {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.casestudy-body ul,
+.casestudy-body ol {
+  margin: 0 0 20px 24px;
+  color: var(--fg-dim);
+}
+
+.casestudy-body li {
+  margin-bottom: 8px;
+}
+
+.casestudy-body code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  color: var(--accent);
+}
+
+.casestudy-body pre {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  margin: 24px 0;
+}
+
+.casestudy-body pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--fg);
+}
+
+.casestudy-body blockquote {
+  border-left: 2px solid var(--accent);
+  padding: 8px 0 8px 20px;
+  margin: 24px 0;
+  color: var(--fg-dim);
+  font-style: italic;
+}
+
+.casestudy-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin: 80px 0;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.casestudy-nav-item {
+  background: var(--bg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-mono);
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.casestudy-nav-item:hover {
+  background: var(--bg-2);
+}
+
+.casestudy-nav-item.next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.casestudy-nav-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.casestudy-nav-title {
+  font-size: 16px;
+  color: var(--fg);
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+}
+
+.casestudy-nav-item:hover .casestudy-nav-title {
+  color: var(--accent);
+}
+
+.casestudy-nav-item.empty {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+@media (max-width: 720px) {
+  .casestudy-nav {
+    grid-template-columns: 1fr;
+  }
+  .casestudy-nav-item.next {
+    text-align: left;
+    align-items: flex-start;
+  }
+}

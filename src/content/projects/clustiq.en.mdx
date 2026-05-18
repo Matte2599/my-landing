@@ -1,0 +1,41 @@
+---
+slug: clustiq
+title: Clustiq
+lang: en
+year: 2025
+status: in-production
+yearLabel: 2025 · in production
+summary: Centralized contacts, assisted CSV/PDF/OCR import, mail campaigns.
+description: Web platform to register, import and export contact records — including assisted import via CSV, PDF or OCR scans — and to create personalized mail campaigns.
+tech: [React, Tailwind, FastAPI, PostgreSQL, OpenAI, SendGrid, Brave Search API]
+num: PRJ-02
+glyph: square
+cover: /work/clustiq-cover.jpg
+coverAlt: Clustiq login screen with operational backoffice presentation for contacts, workflow and diagnostics
+linkType: visit
+order: 2
+nda: false
+---
+
+## Problem
+
+Centralize heterogeneous contact records (people, companies, institutions) coming from different sources — customer CSV/XLSX, supplier PDFs, paper scans — in a single workspace where data cleaning, deduplication and outreach live together.
+
+## Architecture
+
+- **React** + **Tailwind** frontend for the operational backoffice (single-page workspace).
+- **FastAPI** Python backend: REST APIs, Pydantic validation, async tasks for OCR and imports.
+- **PostgreSQL** as source of truth: normalized schemas for people/companies/institutions, trigram indexes for fuzzy matching.
+- CSV/XLSX import wizard with guided mapping and *explicit commit* (preview before writing).
+- OCR pipeline on PDFs and scans with a draft review step before promoting records into the database; **OpenAI** extracts structured fields from raw text and generates personalized variants for mail campaigns.
+- Contact enrichment via the **Brave Search API**: given a company name, it fetches the official site, address and public contacts.
+- Duplicate detection with similarity scoring and tracked merge (audit log of merge decisions).
+- Mail campaign delivery via **SendGrid** with dynamic list segmentation and open/click tracking.
+
+## Stack
+
+React · Tailwind · FastAPI · PostgreSQL · Python · OpenAI · SendGrid · Brave Search API
+
+## Outcome
+
+A single backoffice that replaces the Excel + email + mail-marketing tool dance. Cuts onboarding time for new contact lists and removes duplicates at the first import thanks to tracked merges.

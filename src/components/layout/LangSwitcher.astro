@@ -1,0 +1,39 @@
+---
+import { t, switchLocaleUrl } from '../../i18n/utils';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const targetLocale: Locale = locale === 'it' ? 'en' : 'it';
+const href = switchLocaleUrl(Astro.url.pathname, targetLocale);
+const label = t('lang.switch', locale);
+const ariaLabel = locale === 'it' ? `Switch language to English` : `Cambia lingua in italiano`;
+---
+
+<a class="lang-switcher" href={href} hreflang={targetLocale} aria-label={ariaLabel}>
+  {label}
+</a>
+
+<style>
+  .lang-switcher {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--fg-dim);
+    padding: 4px 8px;
+    border: 1px solid var(--line-2);
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background 0.2s;
+  }
+
+  .lang-switcher:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+</style>

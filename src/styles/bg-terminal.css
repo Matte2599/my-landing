@@ -1,0 +1,160 @@
+/* ============================================================
+   Background terminal — scroll-driven Linux deploy log
+   Replaces the legacy WebGL canvas background.
+   ============================================================ */
+#bg-terminal {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+  color: var(--fg-dim);
+  padding: 80px clamp(20px, 5vw, 80px);
+  overflow: hidden;
+  opacity: 0.55;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 12%,
+    black 78%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 12%,
+    black 78%,
+    transparent 100%
+  );
+}
+
+#bg-terminal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(6, 6, 10, 0.55) 70%
+  );
+  pointer-events: none;
+}
+
+.bg-terminal-output {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100%;
+  max-height: 100%;
+  gap: 0;
+  white-space: pre;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  margin: 0;
+  position: relative;
+}
+
+.bg-terminal-line {
+  display: block;
+  animation: bg-term-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-width: min(900px, 80vw);
+}
+
+@keyframes bg-term-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-terminal-line {
+    animation: none;
+  }
+}
+
+/* Line variants */
+.tl-p {
+  color: var(--fg);
+}
+.tl-p::before {
+  content: '$ ';
+  color: var(--accent);
+}
+.tl-pr::before {
+  /* root prompt */
+  content: '# ';
+  color: oklch(0.7 0.2 25);
+}
+.tl-o {
+  color: var(--fg-dim);
+}
+.tl-ok {
+  color: var(--accent);
+}
+.tl-ok::before {
+  content: '[OK] ';
+  color: var(--accent);
+}
+.tl-w {
+  color: var(--warn);
+}
+.tl-w::before {
+  content: '[WARN] ';
+}
+.tl-e {
+  color: oklch(0.7 0.2 25);
+}
+.tl-e::before {
+  content: '[ERR] ';
+}
+.tl-c {
+  color: var(--muted);
+}
+.tl-c::before {
+  content: '# ';
+}
+.tl-b {
+  height: 1em;
+}
+
+.tl-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  vertical-align: text-bottom;
+  margin-left: 4px;
+  animation: bg-term-blink 1s steps(2, start) infinite;
+}
+
+@keyframes bg-term-blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-cursor {
+    animation: none;
+  }
+}
+
+@media (max-width: 720px) {
+  #bg-terminal {
+    opacity: 0.35;
+    font-size: 11px;
+  }
+}

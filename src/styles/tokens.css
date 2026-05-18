@@ -1,0 +1,40 @@
+/* ============================================================
+   Design tokens — single source of truth
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --bg: #06060a;
+  --bg-2: #0a0a12;
+  --bg-3: #0e0e18;
+
+  /* Foreground */
+  --fg: #f5f6fa;
+  --fg-dim: #9da3b4;
+  --muted: #555968;
+
+  /* Lines */
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+
+  /* Accent — single hue drives the full accent palette */
+  --accent-h: 230;
+  --accent: oklch(0.72 0.18 var(--accent-h));
+  --accent-soft: oklch(0.72 0.18 var(--accent-h) / 0.16);
+  --accent-line: oklch(0.72 0.18 var(--accent-h) / 0.4);
+  --accent-glow: oklch(0.72 0.18 var(--accent-h) / 0.55);
+
+  /* Secondary neons */
+  --neon: oklch(0.88 0.15 200);
+  --warn: oklch(0.78 0.16 30);
+  --ok: oklch(0.78 0.18 145);
+
+  /* Fonts (self-hosted via @fontsource-variable) */
+  --font-sans: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Layout */
+  --maxw: 1280px;
+  --pad-x: clamp(20px, 4vw, 64px);
+
+  color-scheme: dark;
+}

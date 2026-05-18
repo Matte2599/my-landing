@@ -1,0 +1,375 @@
+/* ============================================================
+   Projects — sticky 3D stack + alt layouts (grid/list)
+   ============================================================ */
+.projects {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.projects-head {
+  max-width: var(--maxw);
+  margin: 0 auto clamp(48px, 8vh, 80px);
+  padding: 0 var(--pad-x);
+}
+
+.projects-stage-wrap {
+  position: relative;
+  /* 100vh of scroll per card — set --projects-count from the template. */
+  height: calc(var(--projects-count, 6) * 100vh);
+}
+
+.projects-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  perspective: 1600px;
+  perspective-origin: 50% 50%;
+}
+
+.projects-counter {
+  position: absolute;
+  bottom: 40px;
+  left: var(--pad-x);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--fg-dim);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 5;
+}
+
+.projects-counter-current {
+  font-size: 56px;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.projects-counter-total {
+  color: var(--muted);
+}
+
+.projects-counter-bar {
+  width: 200px;
+  height: 1px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+
+.projects-counter-bar-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.project-cards {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  display: grid;
+  place-items: center;
+}
+
+.project-card {
+  position: absolute;
+  width: min(720px, 78vw);
+  height: min(440px, 58vh);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+}
+
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  border-bottom: 1px solid var(--line);
+}
+
+.project-card-top-id {
+  color: var(--accent);
+}
+
+.project-card-body {
+  position: relative;
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+}
+
+.project-card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card-year {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+}
+
+.project-card-title {
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1;
+  margin-top: 8px;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.project-card-desc {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--fg-dim);
+  line-height: 1.55;
+  max-width: 38ch;
+}
+
+.project-card-meta {
+  margin-top: auto;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.project-card-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 4px 8px;
+  border: 1px solid var(--line-2);
+  color: var(--fg-dim);
+}
+
+.project-card-visual {
+  position: relative;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.4) 100%),
+    repeating-linear-gradient(45deg, var(--bg-3) 0 10px, var(--bg-2) 10px 20px);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.project-card-visual::before {
+  content: attr(data-label);
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+
+.project-card-visual-glyph {
+  position: absolute;
+  inset: 24px;
+  border: 1px solid var(--accent-line);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-shadow: 0 0 12px var(--accent-glow);
+}
+
+.project-card-visual-glyph svg {
+  width: 64px;
+  height: 64px;
+  opacity: 0.9;
+}
+
+/* Cover image — UI screenshots are landscape, the card visual frame is
+   portrait-ish, so we use `contain` to show the whole screenshot framed
+   against the diagonal-stripe pattern. */
+.project-card-cover {
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+  object-position: center;
+  z-index: 0;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  filter: saturate(0.95);
+}
+
+/* `cover-top` is for tall mobile screenshots: fill the frame and keep
+   the top portion (logo + hero) instead of letterboxing. */
+.project-card-cover[data-fit='cover-top'] {
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Keep the corner LIVE PREVIEW · NN label readable over photos */
+.project-card-visual:has(.project-card-cover)::before {
+  z-index: 1;
+  background: rgba(6, 6, 10, 0.75);
+  padding: 3px 7px;
+  border: 1px solid var(--line-2);
+}
+
+.project-card-bottom {
+  padding: 14px 20px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--fg-dim);
+  letter-spacing: 0.08em;
+}
+
+.project-card-link {
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-card::before,
+.project-card::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--accent);
+  pointer-events: none;
+}
+
+.project-card::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.project-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: 0;
+  border-top: 0;
+}
+
+/* Alternate layouts */
+.projects-stage.layout-grid,
+.projects-stage.layout-list {
+  perspective: none;
+  height: auto;
+  position: relative;
+  overflow: visible;
+}
+
+.projects-stage.layout-grid .project-cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  padding: 0 var(--pad-x);
+  max-width: var(--maxw);
+  margin: 0 auto;
+  inset: auto;
+  transform-style: flat;
+}
+
+.projects-stage.layout-grid .project-card {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  transform: none !important;
+  opacity: 1 !important;
+}
+
+.projects-stage.layout-list .project-cards {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  inset: auto;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  transform-style: flat;
+}
+
+.projects-stage.layout-list .project-card {
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
+  transform: none !important;
+  opacity: 1 !important;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.projects-stage.layout-list .project-card::before,
+.projects-stage.layout-list .project-card::after {
+  display: none;
+}
+
+.projects-stage.layout-list .project-card-body {
+  grid-template-columns: 1fr 1.4fr;
+}
+
+@media (max-width: 720px) {
+  .project-card-body {
+    grid-template-columns: 1fr;
+  }
+  .project-card-visual {
+    display: none;
+  }
+  .project-card {
+    height: auto;
+    min-height: 360px;
+  }
+  /* On mobile, force list layout */
+  .projects-stage-wrap {
+    height: auto !important;
+  }
+  .projects-stage {
+    position: relative;
+    height: auto;
+    perspective: none;
+    overflow: visible;
+  }
+  .project-cards {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 var(--pad-x);
+  }
+  .project-card {
+    position: relative;
+    width: 100%;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .projects-counter {
+    display: none;
+  }
+}

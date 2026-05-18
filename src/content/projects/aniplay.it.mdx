@@ -1,0 +1,40 @@
+---
+slug: aniplay
+title: AniPlay
+lang: it
+year: 2024
+status: archived
+yearLabel: 2024 · progetto cessato
+summary: Piattaforma di streaming dedicata all'animazione giapponese.
+description: Piattaforma web per lo streaming di contenuti di animazione giapponese, con catalogo, calendario uscite, playlist e top anime.
+tech: [Angular, PostgreSQL, Spring Boot 3, Kafka, Kubernetes, ffmpeg, Elasticsearch]
+num: PRJ-03
+glyph: circle
+cover: /work/aniplay-cover.jpg
+coverAlt: Interfaccia AniPlay con player video, sidebar di navigazione, playlist episodi e classifica top anime
+linkType: visit
+order: 3
+nda: false
+---
+
+## Problema
+
+Costruire una piattaforma di streaming di animazione giapponese con catalogo crescente, calendario uscite, ricerca rapida e una user experience comparabile ai servizi mainstream — sostenibile su un'infrastruttura propria.
+
+## Architettura
+
+- **Frontend Angular** per app web reattiva (sidebar, player, playlist, top anime, modalità light/dark).
+- **Backend Spring Boot 3** (Java) come monolite modulare: catalogo, utenti, riproduzioni, sottoscrizioni Premium.
+- **PostgreSQL** per il dominio: serie, episodi, utenti, watch history, abbonamenti.
+- **Elasticsearch** come motore di ricerca su titoli, generi, stagioni, con suggerimenti as-you-type.
+- **Apache Kafka** per gli eventi di playback (view, pause, resume, completion) e per alimentare le classifiche giorno/settimana/mese.
+- **ffmpeg** pipeline di transcoding: ingestione mezzanine → HLS multi-bitrate, generazione poster e sprite di anteprima.
+- Deploy su **Kubernetes** con HPA, ingress TLS e fail-over multi-AZ; CDN davanti agli stream HLS.
+
+## Stack
+
+Angular · TypeScript · Spring Boot 3 · Java · PostgreSQL · Elasticsearch · Kafka · ffmpeg · Kubernetes
+
+## Risultato
+
+Catalogo navigabile in produzione con player, playlist, calendario, top anime, supporto Chromecast, modalità light/dark. La pipeline ffmpeg garantisce stream adattivi su rete consumer; Elasticsearch tiene le ricerche sotto i 50ms p95.

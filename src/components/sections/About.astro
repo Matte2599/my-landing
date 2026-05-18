@@ -1,0 +1,36 @@
+---
+import { t } from '../../i18n/utils';
+import SectionHead from '../ui/SectionHead.astro';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section id="about" data-section="about" data-screen-label="02 About">
+  <SectionHead num="02" title={t('about.title', locale)} file={t('about.file', locale)} />
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="reveal" set:html={t('about.p1', locale).replace(/<mark>(.*?)<\/mark>/g, '<span class="accent-mark">$1</span>')} />
+      <p class="reveal d1 muted" set:html={t('about.p2', locale).replace(/<mark>(.*?)<\/mark>/g, '<span class="accent-mark">$1</span>')} />
+      <p class="reveal d2 muted">
+        {t('about.p3', locale)}
+      </p>
+    </div>
+
+    <div class="about-stats reveal d1">
+      <div class="about-stat">
+        <span class="about-stat-num">04<span class="unit">{t('about.stat.years.unit', locale)}</span></span>
+        <span class="about-stat-label">{t('about.stat.years.label', locale)}</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-num">30<span class="unit">+</span></span>
+        <span class="about-stat-label">{t('about.stat.projects.label', locale)}</span>
+      </div>
+    </div>
+  </div>
+</section>

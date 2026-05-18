@@ -1,0 +1,141 @@
+---
+import { t, localizedUrl } from '../../i18n/utils';
+import SectionHead from '../ui/SectionHead.astro';
+import ArrowIcon from '../ui/ArrowIcon.astro';
+import { getProjects } from '../../lib/content';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const projects = await getProjects(locale);
+
+function linkLabel(linkType: string): string {
+  if (linkType === 'github') return t('projects.linkGithub', locale);
+  if (linkType === 'nda') return t('projects.linkNda', locale);
+  return t('projects.linkVisit', locale);
+}
+---
+
+<section class="projects" id="projects" data-section="projects" data-screen-label="05 Work">
+  <div class="projects-head">
+    <SectionHead
+      num="05"
+      title={t('projects.title', locale)}
+      file={t('projects.file', locale)}
+    />
+  </div>
+
+  <div
+    class="projects-stage-wrap"
+    id="projects-stage-wrap"
+    style={`--projects-count: ${projects.length}`}
+  >
+    <div class="projects-stage" id="projects-stage">
+      <div class="project-cards" id="project-cards">
+        {
+          projects.map((project, idx) => (
+            <article class="project-card" data-idx={idx} data-slug={project.data.slug}>
+              <header class="project-card-top">
+                <span class="project-card-top-id">{project.data.num}</span>
+                <span>{t('projects.scrollHint', locale)}</span>
+              </header>
+              <div class="project-card-body">
+                <div class="project-card-info">
+                  <span class="project-card-year">{project.data.yearLabel}</span>
+                  <h3 class="project-card-title">{project.data.title}</h3>
+                  <p class="project-card-desc">{project.data.description}</p>
+                  <div class="project-card-meta">
+                    {project.data.tech.map((tag) => (
+                      <span class="project-card-tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                <div
+                  class="project-card-visual"
+                  data-label={`LIVE PREVIEW · ${String(idx + 1).padStart(2, '0')}`}
+                >
+                  {project.data.cover ? (
+                    <img
+                      class="project-card-cover"
+                      data-fit={project.data.coverFit}
+                      src={project.data.cover}
+                      alt={project.data.coverAlt ?? project.data.title}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                  <div class="project-card-visual-glyph">
+                    {project.data.glyph === 'hex' && (
+                      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                        <path d="M32 4 L56 16 L56 48 L32 60 L8 48 L8 16 Z" stroke="currentColor" stroke-width="1" />
+                        <path d="M32 4 L32 60 M8 16 L56 16 M8 48 L56 48 M8 16 L56 48 M56 16 L8 48" stroke="currentColor" stroke-width="0.7" opacity="0.4" />
+                      </svg>
+                    )}
+                    {project.data.glyph === 'circle' && (
+                      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                        <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="1" />
+                        <circle cx="32" cy="32" r="18" stroke="currentColor" stroke-width="0.7" />
+                        <circle cx="32" cy="32" r="8" stroke="currentColor" stroke-width="0.5" />
+                        <path d="M4 32 L60 32 M32 4 L32 60" stroke="currentColor" stroke-width="0.5" opacity="0.5" />
+                      </svg>
+                    )}
+                    {project.data.glyph === 'square' && (
+                      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                        <rect x="8" y="8" width="48" height="48" stroke="currentColor" stroke-width="1" />
+                        <rect x="14" y="14" width="36" height="6" stroke="currentColor" stroke-width="0.7" />
+                        <rect x="14" y="24" width="22" height="6" stroke="currentColor" stroke-width="0.7" />
+                        <rect x="14" y="34" width="36" height="14" stroke="currentColor" stroke-width="0.7" />
+                      </svg>
+                    )}
+                    {project.data.glyph === 'dodeca' && (
+                      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                        <path d="M32 6 L58 22 L58 46 L32 62 L6 46 L6 22 Z" stroke="currentColor" stroke-width="1" />
+                        <path d="M32 6 L32 34 L58 22 M32 34 L6 22 M32 34 L32 62" stroke="currentColor" stroke-width="0.7" />
+                      </svg>
+                    )}
+                    {project.data.glyph === 'vault' && (
+                      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                        <rect x="14" y="6" width="36" height="52" stroke="currentColor" stroke-width="1" />
+                        <path d="M32 16 L32 36 M22 26 L42 26" stroke="currentColor" stroke-width="1.4" />
+                        <rect x="20" y="42" width="24" height="2" fill="currentColor" />
+                        <rect x="20" y="48" width="16" height="2" fill="currentColor" />
+                      </svg>
+                    )}
+                    {project.data.glyph === 'shield' && (
+                      <svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                        <path d="M32 6 L52 16 L52 36 C52 48 42 56 32 60 C22 56 12 48 12 36 L12 16 Z" stroke="currentColor" stroke-width="1" />
+                        <rect x="26" y="28" width="12" height="14" stroke="currentColor" stroke-width="1" />
+                        <path d="M28 28 V22 C28 19.8 29.8 18 32 18 C34.2 18 36 19.8 36 22 V28" stroke="currentColor" stroke-width="1" />
+                      </svg>
+                    )}
+                  </div>
+                  )}
+                </div>
+              </div>
+              <footer class="project-card-bottom">
+                <span>{t('projects.caseStudy', locale)} · /{project.data.slug}</span>
+                <a class="project-card-link" href={localizedUrl(`/work/${project.data.slug}`, locale)}>
+                  {linkLabel(project.data.linkType)}
+                  <ArrowIcon size={10} strokeWidth={1.2} />
+                </a>
+              </footer>
+            </article>
+          ))
+        }
+      </div>
+      <div class="projects-counter">
+        <span class="projects-counter-current" id="proj-counter-cur">01</span>
+        <span>·</span>
+        <div class="projects-counter-bar">
+          <div class="projects-counter-bar-fill" id="proj-counter-bar-fill"></div>
+        </div>
+        <span class="projects-counter-total" id="proj-counter-total">
+          {String(projects.length).padStart(2, '0')}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

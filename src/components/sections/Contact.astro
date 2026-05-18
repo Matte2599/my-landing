@@ -1,0 +1,60 @@
+---
+import { t } from '../../i18n/utils';
+import SectionHead from '../ui/SectionHead.astro';
+import ArrowIcon from '../ui/ArrowIcon.astro';
+import { SITE, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const subject = encodeURIComponent(t('contact.mailto.subject', locale));
+const body = encodeURIComponent(t('contact.mailto.body', locale));
+const mailto = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
+---
+
+<section id="contact" data-section="contact" data-screen-label="06 Contact">
+  <SectionHead num="06" title={t('contact.title', locale)} file={t('contact.file', locale)} />
+
+  <div class="contact-wrap">
+    <div>
+      <h2 class="contact-heading reveal">
+        {t('contact.heading', locale)}<br />
+        <span class="contact-heading-accent">{t('contact.headingAccent', locale)}</span>
+      </h2>
+      <p
+        style="color: var(--fg-dim); max-width: 480px; margin-bottom: 32px;"
+        class="reveal d1"
+      >
+        {t('contact.intro', locale)}
+      </p>
+    </div>
+
+    <div>
+      <a class="contact-email magnetic" href={mailto} data-magnet="0.15">
+        <span data-scramble={SITE.email}>{SITE.email}</span>
+        <ArrowIcon size={14} />
+      </a>
+      <div class="contact-meta">
+        <div class="contact-meta-row">
+          <span class="contact-meta-row-label">{t('contact.meta.base', locale)}</span>
+          <span class="contact-meta-row-value">{t('contact.meta.baseValue', locale)}</span>
+        </div>
+        <div class="contact-meta-row">
+          <span class="contact-meta-row-label">{t('contact.meta.time', locale)}</span>
+          <span class="contact-meta-row-value" id="contact-time">— : — : —</span>
+        </div>
+        <div class="contact-meta-row">
+          <span class="contact-meta-row-label">{t('contact.meta.slot', locale)}</span>
+          <span class="contact-meta-row-value">{t('contact.meta.slotValue', locale)}</span>
+        </div>
+        <div class="contact-meta-row">
+          <span class="contact-meta-row-label">{t('contact.meta.rate', locale)}</span>
+          <span class="contact-meta-row-value">{t('contact.meta.rateValue', locale)}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

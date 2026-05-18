@@ -1,0 +1,60 @@
+---
+import { t } from '../../i18n/utils';
+import { SITE, type Locale } from '../../i18n/ui';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="hero" id="hero" data-section="hero" data-screen-label="01 Hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="hero-top-block">
+        <span class="hero-top-block-label">{t('hero.coord', locale)}</span>
+        <span>{SITE.coordinates}</span>
+        <span>{SITE.city}</span>
+      </div>
+      <div class="hero-top-block">
+        <span class="hero-top-block-label">{t('hero.status', locale)}</span>
+        <span>
+          <span style="color: var(--ok)">●</span>
+          {t('hero.status.available', locale)}
+        </span>
+      </div>
+      <div class="hero-top-block" style="text-align: right">
+        <span class="hero-top-block-label">{t('hero.build', locale)}</span>
+        <span>{SITE.build}</span>
+        <span>{SITE.runtime}</span>
+      </div>
+    </div>
+
+    <div class="hero-headline" data-scramble-trigger>
+      <h1>
+        <span class="hero-headline-line">
+          <span data-scramble="MATTEO">MATTEO</span>
+        </span>
+        <span class="hero-headline-line">
+          <span class="hero-headline-accent" data-scramble="FEROLDI">FEROLDI</span>
+        </span>
+      </h1>
+    </div>
+
+    <div class="hero-tag">
+      <p class="hero-tag-text">
+        <strong>{t('hero.role', locale)}</strong>{t('hero.intro', locale)}
+      </p>
+      <div class="hero-cta">
+        <Button href="#projects" variant="primary" magnetic withArrow>
+          {t('hero.cta.work', locale)}
+        </Button>
+        <Button href="#contact" magnetic>
+          {t('hero.cta.contact', locale)}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>

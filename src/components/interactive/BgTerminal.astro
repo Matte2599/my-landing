@@ -1,0 +1,12 @@
+---
+/**
+ * Background terminal — replaces the WebGL canvas.
+ * The actual lines are emitted client-side by `src/scripts/bg-terminal.ts`
+ * in response to scroll progress. The server-rendered shell here is empty
+ * so the initial paint is fast and SEO-clean.
+ */
+---
+
+<div id="bg-terminal" aria-hidden="true">
+  <pre class="bg-terminal-output" id="bg-terminal-output"></pre>
+</div>

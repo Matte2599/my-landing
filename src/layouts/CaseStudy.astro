@@ -1,0 +1,119 @@
+---
+import Base from './Base.astro';
+import Nav from '../components/layout/Nav.astro';
+import Footer from '../components/layout/Footer.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { t, localizedUrl } from '../i18n/utils';
+import { SITE, type Locale } from '../i18n/ui';
+import type { ProjectEntry } from '../lib/content';
+
+interface Props {
+  locale: Locale;
+  project: ProjectEntry;
+  prev: ProjectEntry | null;
+  next: ProjectEntry | null;
+}
+
+const { locale, project, prev, next } = Astro.props;
+const data = project.data;
+const url = new URL(Astro.url.pathname, SITE.url).toString();
+
+const statusLabel: Record<string, Record<Locale, string>> = {
+  'in-production': { it: 'In produzione', en: 'In production' },
+  'open-source': { it: 'Open source', en: 'Open source' },
+  'enterprise': { it: 'Enterprise', en: 'Enterprise' },
+  'archived': { it: 'Progetto cessato', en: 'Discontinued' },
+  'in-development': { it: 'In sviluppo', en: 'In development' },
+};
+---
+
+<Base locale={locale} title={data.title} description={data.summary} noindex={data.draft}>
+  <JsonLd
+    slot="head"
+    type="casestudy"
+    locale={locale}
+    title={data.title}
+    description={data.summary}
+    url={url}
+    datePublished={`${data.year}-01-01`}
+    keywords={data.tech}
+  />
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <Nav locale={locale} />
+
+  <main id="main">
+    <article class="casestudy">
+      <a class="casestudy-back" href={`${localizedUrl('/', locale)}#projects`}>
+        ← {t('casestudy.allWork', locale)}
+      </a>
+
+      <header class="casestudy-header">
+        <div>
+          <span class="casestudy-num">{data.num}</span>
+          <h1 class="casestudy-title">{data.title}</h1>
+          <p class="casestudy-summary">{data.summary}</p>
+        </div>
+
+        <div class="casestudy-meta">
+          <div class="casestudy-meta-row">
+            <span class="casestudy-meta-label">{t('casestudy.year', locale)}</span>
+            <span class="casestudy-meta-value">{data.yearLabel}</span>
+          </div>
+          <div class="casestudy-meta-row">
+            <span class="casestudy-meta-label">{t('casestudy.status', locale)}</span>
+            <span class="casestudy-meta-value">
+              {statusLabel[data.status][locale]}
+            </span>
+          </div>
+          {data.role && (
+            <div class="casestudy-meta-row">
+              <span class="casestudy-meta-label">{t('casestudy.role', locale)}</span>
+              <span class="casestudy-meta-value">{data.role}</span>
+            </div>
+          )}
+          <div class="casestudy-tech-row">
+            {data.tech.map((tag) => <span class="casestudy-tech-tag">{tag}</span>)}
+          </div>
+        </div>
+      </header>
+
+      <div class="casestudy-body">
+        <slot />
+      </div>
+
+      <nav class="casestudy-nav" aria-label="case study navigation">
+        {
+          prev ? (
+            <a
+              class="casestudy-nav-item prev"
+              href={localizedUrl(`/work/${prev.data.slug}`, locale)}
+            >
+              <span class="casestudy-nav-label">← {t('casestudy.prev', locale)}</span>
+              <span class="casestudy-nav-title">{prev.data.title}</span>
+            </a>
+          ) : (
+            <span class="casestudy-nav-item prev empty" />
+          )
+        }
+        {
+          next ? (
+            <a
+              class="casestudy-nav-item next"
+              href={localizedUrl(`/work/${next.data.slug}`, locale)}
+            >
+              <span class="casestudy-nav-label">{t('casestudy.next', locale)} →</span>
+              <span class="casestudy-nav-title">{next.data.title}</span>
+            </a>
+          ) : (
+            <span class="casestudy-nav-item next empty" />
+          )
+        }
+      </nav>
+    </article>
+  </main>
+
+  <Footer locale={locale} />
+</Base>

@@ -1,0 +1,28 @@
+/* ============================================================
+   Global stylesheet — imports all modules in cascade order
+   Loaded once via Base.astro
+   ============================================================ */
+
+/* Self-hosted variable fonts */
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* Tokens first — every module depends on them */
+@import './tokens.css';
+@import './base.css';
+@import './utilities.css';
+
+/* Component modules — created in F2+ */
+@import './cursor.css';
+@import './nav.css';
+@import './buttons.css';
+@import './hero.css';
+@import './ticker.css';
+@import './about.css';
+@import './skills.css';
+@import './services.css';
+@import './projects.css';
+@import './contact.css';
+@import './footer.css';
+@import './casestudy.css';
+@import './bg-terminal.css';

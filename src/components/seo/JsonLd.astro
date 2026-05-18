@@ -1,0 +1,69 @@
+---
+import { SITE, type Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  type: 'home' | 'casestudy';
+  title?: string;
+  description?: string;
+  url: string;
+  datePublished?: string;
+  keywords?: string[];
+}
+
+const { locale, type, title, description, url, datePublished, keywords } = Astro.props;
+
+const person = {
+  '@type': 'Person',
+  name: SITE.name,
+  url: SITE.url,
+  email: SITE.email,
+  jobTitle: locale === 'it' ? 'Senior Full Stack Developer' : 'Senior Full Stack Developer',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Milano',
+    addressCountry: 'IT',
+  },
+  sameAs: [SITE.social.github],
+};
+
+let payload: object;
+
+if (type === 'home') {
+  payload = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    inLanguage: locale,
+    url,
+    mainEntity: {
+      ...person,
+      knowsAbout: [
+        'Web Development',
+        'Full-stack Architecture',
+        'TypeScript',
+        'React',
+        'Node.js',
+        'Go',
+        'Kubernetes',
+        'three.js',
+        'WebGL',
+        'Cloud Infrastructure',
+      ],
+    },
+  };
+} else {
+  payload = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    inLanguage: locale,
+    url,
+    name: title,
+    description,
+    author: person,
+    ...(datePublished ? { dateCreated: datePublished } : {}),
+    ...(keywords ? { keywords: keywords.join(', ') } : {}),
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(payload)} />

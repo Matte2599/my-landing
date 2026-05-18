@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Dark surface — matches --bg = #06060a -->
+  <rect width="64" height="64" rx="10" fill="#06060a"/>
+  <!-- Accent diamond — mirrors the .nav-brand-glyph (oklch 0.72 0.18 230) -->
+  <g filter="url(#glow)">
+    <rect
+      x="22" y="22" width="20" height="20"
+      transform="rotate(45 32 32)"
+      fill="#3b82f6"
+    />
+  </g>
+  <!-- Inner highlight for crispness at favicon sizes -->
+  <rect
+    x="26" y="26" width="12" height="12"
+    transform="rotate(45 32 32)"
+    fill="#ffffff"
+    opacity="0.06"
+  />
+</svg>

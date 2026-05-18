@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/layout/Nav.astro';
+import Footer from '../components/layout/Footer.astro';
+import Hero from '../components/sections/Hero.astro';
+import Ticker from '../components/ui/Ticker.astro';
+import About from '../components/sections/About.astro';
+import Skills from '../components/sections/Skills.astro';
+import Services from '../components/sections/Services.astro';
+import Projects from '../components/sections/Projects.astro';
+import Contact from '../components/sections/Contact.astro';
+import BgTerminal from '../components/interactive/BgTerminal.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { DEFAULT_LOCALE, SITE, type Locale } from '../i18n/ui';
+
+const locale = ((Astro.currentLocale as Locale) ?? DEFAULT_LOCALE) as Locale;
+const url = new URL(Astro.url.pathname, SITE.url).toString();
+---
+
+<Base locale={locale}>
+  <JsonLd slot="head" type="home" locale={locale} url={url} />
+  <!-- Custom cursor — hidden on touch/no-hover via CSS -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+
+  <BgTerminal />
+
+  <Nav locale={locale} />
+
+  <main id="main">
+    <Hero locale={locale} />
+    <Ticker locale={locale} />
+    <About locale={locale} />
+    <Skills locale={locale} />
+    <Services locale={locale} />
+    <Projects locale={locale} />
+    <Contact locale={locale} />
+  </main>
+
+  <Footer locale={locale} />
+</Base>

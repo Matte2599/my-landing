@@ -1,0 +1,38 @@
+---
+slug: startpilot
+title: StartPilot
+lang: en
+year: 2026
+status: in-development
+yearLabel: 2026 · in development
+summary: Support platform for companies and startups.
+description: Web support platform for companies and startups, with automations powered by self-hosted LLM models.
+tech: [Svelte, PostgreSQL, FastAPI, vLLM]
+num: PRJ-05
+glyph: shield
+cover: /work/startpilot-cover.jpg
+coverAlt: StartPilot interface, support platform for companies and startups
+linkType: visit
+order: 5
+nda: false
+---
+
+## Problem
+
+Give companies and startups a single support hub — onboarding, documentation, operational support, automations — without depending on external LLM providers or exposing sensitive data to third-party services.
+
+## Architecture
+
+- **Svelte** + SvelteKit frontend for both the customer dashboard and the operator workspace: chat, tickets, knowledge base, automations.
+- **FastAPI** Python backend: REST APIs, Pydantic validation, LLM orchestration, conversation and knowledge-base management.
+- **PostgreSQL** as source of truth: companies, users, tickets, conversations, versioned knowledge base.
+- **vLLM** as the self-hosted inference engine: high-throughput serving of open-weight LLMs, dynamic batching, KV-cache management.
+- RAG pipeline on PostgreSQL + pgvector to fetch context from the knowledge base before inference.
+
+## Stack
+
+Svelte · SvelteKit · TypeScript · FastAPI · Python · PostgreSQL · vLLM
+
+## Outcome
+
+On-brand support served on the customer's own infrastructure, with no data leaving for third parties. Typical response latencies under 2 seconds thanks to vLLM batching, knowledge base editable by the operator with immediate effect on the answers.

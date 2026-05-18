@@ -1,0 +1,44 @@
+---
+import { t } from '../../i18n/utils';
+import SectionHead from '../ui/SectionHead.astro';
+import { skills } from '../../data/skills';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const revealClasses = ['reveal', 'reveal d1', 'reveal d2'];
+---
+
+<section id="skills" data-section="skills" data-screen-label="03 Stack">
+  <SectionHead num="03" title={t('skills.title', locale)} file={t('skills.file', locale)} />
+
+  <div class="skills-grid">
+    {
+      skills.map((cluster, i) => (
+        <div class={`skills-cluster ${revealClasses[i % revealClasses.length]}`}>
+          <div class="skills-cluster-head">
+            <span class="skills-cluster-name">{cluster.name}</span>
+            <span class="skills-cluster-count">{String(cluster.tags.length).padStart(2, '0')}</span>
+          </div>
+          <h3 class="skills-cluster-title">
+            {cluster.title[locale].split('\n').map((line, idx, arr) => (
+              <>
+                {line}
+                {idx < arr.length - 1 && <br />}
+              </>
+            ))}
+          </h3>
+          <div class="skills-tags">
+            {cluster.tags.map((tag) => (
+              <span class="skill-tag">{tag}</span>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+slug: dramaworld
+title: DramaWorld
+lang: en
+year: 2023
+status: archived
+yearLabel: 2023 · discontinued
+summary: Streaming of Korean, Chinese and Japanese TV series.
+description: Web platform streaming Asian TV series — Korean, Chinese and Japanese — with catalog, show pages and adaptive player.
+tech: [PHP 7.4, MySQL, ffmpeg, Bootstrap, MyDramaList API]
+num: PRJ-04
+glyph: dodeca
+cover: /work/dramaworld-cover.jpg
+coverAlt: DramaWorld interface with Asian TV-series catalog and video player
+coverFit: cover-top
+linkType: visit
+order: 4
+nda: false
+---
+
+## Problem
+
+Aggregate Korean, Chinese and Japanese TV series in a single platform, with rich metadata (cast, seasons, ratings, episodes) and an adaptive player that runs well on consumer connections too.
+
+## Architecture
+
+- **PHP 7.4** on the server: routing, authentication, controllers for catalog and player.
+- **MySQL** for the domain: shows, episodes, users, watch history, watchlist.
+- **MyDramaList API** for enriched metadata: cast, synopsis, posters, ratings, show pages.
+- **Bootstrap** for the frontend design system, responsive layout for desktop and mobile.
+- **ffmpeg** transcoding pipeline: ingest → HLS multi-bitrate, posters and preview thumbnails.
+- Segmented storage and CDN in front of the streams to cut latency and bandwidth costs.
+
+## Stack
+
+PHP 7.4 · MySQL · Bootstrap · ffmpeg · MyDramaList API
+
+## Outcome
+
+Browsable catalog with adaptive HLS player, watchlist, metadata-rich show pages, search by genre/country/year. The ffmpeg pipeline produces stable streams even on low-end connections.

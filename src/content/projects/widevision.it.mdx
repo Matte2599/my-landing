@@ -1,0 +1,42 @@
+---
+slug: widevision
+title: WideVision HUB
+lang: it
+year: 2025
+status: in-production
+yearLabel: 2025 · in produzione
+summary: Piattaforma web per il noleggio e l'acquisto di attrezzatura fotografica e cinematografica.
+description: Piattaforma web dedicata al noleggio e all'acquisto di attrezzatura fotografica e cinematografica.
+tech: [PHP, Laravel, MySQL, Bootstrap]
+num: PRJ-01
+glyph: hex
+cover: /work/widevision-cover.jpg
+coverAlt: Hero della piattaforma WideVision con form di ricerca attrezzatura su sfondo di studio fotografico
+linkType: visit
+order: 1
+nda: false
+---
+
+## Problema
+
+Unificare in un'unica piattaforma il noleggio e la vendita di attrezzatura fotografica/cinematografica — categorie eterogenee (corpi, ottiche, illuminazione, audio, supporti), prezzi giornalieri/settimanali, calendario disponibilità, gestione resi e cauzioni.
+
+## Architettura
+
+- **Laravel** come framework principale (controller, Eloquent ORM, queue, scheduling).
+- **MySQL** per persistenza: catalogo, inventario, prenotazioni, ordini, utenti.
+- **Bootstrap** per il design system del frontend, responsive mobile-first.
+- Search engine interno con filtri per categoria, disponibilità per data, prezzo.
+- Sistema di prenotazione con calendar lock per evitare overbooking.
+- Area cliente con storico noleggi, ricevute, gestione cauzioni.
+- Area admin per gestione catalogo, inventario, prezzi, report.
+
+## Stack
+
+PHP · Laravel · MySQL · Bootstrap · Blade · Eloquent
+
+## Risultato
+
+Piattaforma in produzione, sostituisce il workflow precedente (telefono + email + spreadsheet) con un sistema self-service. Riduce il tempo medio per chiudere un noleggio e abbatte gli errori di doppia prenotazione.
+
+> Visit: widevision (sostituire con il link live definitivo).

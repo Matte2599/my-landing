@@ -1,0 +1,33 @@
+/* ============================================================
+   Footer — single bar at bottom
+   ============================================================ */
+footer {
+  position: relative;
+  z-index: 2;
+  padding: 32px var(--pad-x);
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+footer a {
+  transition: color 0.2s;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+
+footer .footer-socials {
+  display: flex;
+  gap: 24px;
+}

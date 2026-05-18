@@ -1,0 +1,37 @@
+---
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const ITEMS_IT = [
+  'FULL STACK',
+  'WEB ARCHITECTURE',
+  'CLOUD NATIVE',
+  'DEVOPS',
+  'API DESIGN',
+  'MICROSERVICES',
+  'CYBER SECURITY',
+];
+
+const ITEMS_EN = [
+  'FULL STACK',
+  'WEB ARCHITECTURE',
+  'CLOUD NATIVE',
+  'DEVOPS',
+  'API DESIGN',
+  'MICROSERVICES',
+  'CYBER SECURITY',
+];
+
+const { locale } = Astro.props;
+const items = locale === 'en' ? ITEMS_EN : ITEMS_IT;
+---
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    {items.map((item) => <span>{item}</span>)}
+    {items.map((item) => <span>{item}</span>)}
+  </div>
+</div>

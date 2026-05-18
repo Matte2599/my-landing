@@ -1,0 +1,97 @@
+---
+import '../styles/global.css';
+import { buildSeo } from '../lib/seo';
+import { type Locale, DEFAULT_LOCALE } from '../i18n/ui';
+import Meta from '../components/seo/Meta.astro';
+import SkipLink from '../components/layout/SkipLink.astro';
+
+interface Props {
+  locale?: Locale;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const {
+  locale = (Astro.currentLocale as Locale) ?? DEFAULT_LOCALE,
+  title,
+  description,
+  ogImage,
+  noindex,
+} = Astro.props;
+
+const seo = buildSeo({
+  title,
+  description,
+  locale,
+  pathname: Astro.url.pathname,
+  ogImage,
+  noindex,
+});
+
+const htmlLang = locale === 'it' ? 'it-IT' : 'en-US';
+
+// Cloudflare Web Analytics (privacy-first, no cookie). Set PUBLIC_CF_BEACON_TOKEN
+// in the deploy environment to activate. Without a token the beacon is omitted.
+const cfBeaconToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+---
+
+<!DOCTYPE html>
+<html lang={htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+
+    <link
+      rel="alternate"
+      hreflang="it"
+      href={new URL('/', Astro.site).toString()}
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href={new URL('/en/', Astro.site).toString()}
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL('/', Astro.site).toString()}
+    />
+
+    <Meta seo={seo} />
+
+    <slot name="head" />
+  </head>
+  <body>
+    <SkipLink locale={locale} />
+
+    <!-- Light veil between the bg terminal and the main content
+         to keep foreground copy comfortably readable. -->
+    <div class="bg-veil" aria-hidden="true"></div>
+
+    <slot />
+
+    {
+      cfBeaconToken && (
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: cfBeaconToken })}
+        />
+      )
+    }
+
+    <script>
+      // Reveal body once first paint is ready — avoids FOUC during font load.
+      document.body.classList.add('loaded');
+    </script>
+
+    <script>
+      import { bootInteractions } from '../scripts/interactions';
+      bootInteractions();
+    </script>
+  </body>
+</html>

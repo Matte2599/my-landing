@@ -1,0 +1,41 @@
+---
+slug: clustiq
+title: Clustiq
+lang: it
+year: 2025
+status: in-production
+yearLabel: 2025 · in produzione
+summary: Anagrafiche centralizzate, import assistito CSV/PDF/OCR, campagne mail.
+description: Piattaforma web per la registrazione, importazione ed esportazione di anagrafiche — anche in modalità assistita via CSV, PDF o scansione OCR — e per la creazione di campagne mail personalizzate.
+tech: [React, Tailwind, FastAPI, PostgreSQL, OpenAI, SendGrid, Brave Search API]
+num: PRJ-02
+glyph: square
+cover: /work/clustiq-cover.jpg
+coverAlt: Schermata di login di Clustiq con presentazione del backoffice operativo per anagrafiche, workflow e diagnostica
+linkType: visit
+order: 2
+nda: false
+---
+
+## Problema
+
+Centralizzare anagrafiche eterogenee (persone, aziende, istituzioni) provenienti da fonti diverse — file CSV/XLSX di clienti, PDF da fornitori, scansioni cartacee — in un'unica workspace dove pulizia dati, deduplicazione e attività di outreach convivono.
+
+## Architettura
+
+- **Frontend React** + **Tailwind** per il backoffice operativo (workspace single-page).
+- **Backend FastAPI** in Python: API REST, validazione Pydantic, task asincroni per OCR e import.
+- **PostgreSQL** come fonte di verità: schemi normalizzati per persone/aziende/istituzioni, indici trigram per il fuzzy-match.
+- Wizard di import CSV/XLSX con mapping guidato e *commit esplicito* (preview prima di scrivere).
+- Pipeline OCR su PDF e scansioni con revisione bozza prima della conferma in anagrafica; **OpenAI** estrae i campi strutturati dal testo grezzo e genera varianti personalizzate per le campagne mail.
+- Arricchimento anagrafiche via **Brave Search API**: dato un ragione sociale, recupera sito ufficiale, indirizzo e contatti pubblici.
+- Rilevamento duplicati con score di similarità e merge tracciato (audit log delle decisioni di merge).
+- Delivery delle campagne mail via **SendGrid** con segmentazione dinamica sulle liste, tracking aperture e click.
+
+## Stack
+
+React · Tailwind · FastAPI · PostgreSQL · Python · OpenAI · SendGrid · Brave Search API
+
+## Risultato
+
+Backoffice unico che sostituisce l'alternarsi di Excel + email + tool di mail marketing. Riduce il tempo di onboarding di una nuova lista contatti e taglia i duplicati al primo import grazie al merge tracciato.

@@ -1,0 +1,101 @@
+---
+import { t, localizedUrl } from '../../i18n/utils';
+import { AVAILABILITY, type Locale } from '../../i18n/ui';
+import LangSwitcher from './LangSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const homeHref = localizedUrl('/', locale);
+
+// Detect whether we are on the home page (any locale). On case-study pages
+// the anchor links must point back to the home — otherwise `#about` etc.
+// dead-end on a page that has no such section.
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = path === '' || path === '/' || path === '/en';
+const homeBase = isHome ? '' : locale === 'en' ? '/en/' : '/';
+
+const links: Array<{ key: string; target: string; href: string }> = [
+  { key: 'nav.index', target: 'hero', href: `${homeBase}#hero` },
+  { key: 'nav.about', target: 'about', href: `${homeBase}#about` },
+  { key: 'nav.stack', target: 'skills', href: `${homeBase}#skills` },
+  { key: 'nav.services', target: 'services', href: `${homeBase}#services` },
+  { key: 'nav.work', target: 'projects', href: `${homeBase}#projects` },
+  { key: 'nav.contact', target: 'contact', href: `${homeBase}#contact` },
+];
+
+const statusKey =
+  AVAILABILITY === 'available'
+    ? 'nav.status.available'
+    : AVAILABILITY === 'limited'
+      ? 'nav.status.limited'
+      : 'nav.status.closed';
+---
+
+<nav class="nav" aria-label="Primary">
+  <a class="nav-brand" href={homeHref} aria-label="feroldi.cloud — home">
+    <span class="nav-brand-glyph" aria-hidden="true"></span>
+    <span class="nav-brand-name">FEROLDI</span><span class="nav-brand-dot">.</span><span class="nav-brand-tld">CLOUD</span>
+  </a>
+
+  <button
+    class="nav-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="nav-links"
+    aria-label={t('nav.toggle', locale)}
+  >
+    <span class="nav-toggle-bars" aria-hidden="true"></span>
+  </button>
+
+  <div class="nav-links" id="nav-links">
+    {
+      links.map((link) => (
+        <a
+          class={`nav-link${link.target === 'hero' ? ' active' : ''}`}
+          data-target={link.target}
+          href={link.href}
+        >
+          {t(link.key as any, locale)}
+        </a>
+      ))
+    }
+  </div>
+
+  <div class="nav-actions">
+    <LangSwitcher locale={locale} />
+    <div class="nav-status" aria-live="polite">
+      <span class="nav-status-dot" aria-hidden="true"></span>
+      <span>{t(statusKey as any, locale)}</span>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+</style>
+
+<script>
+  // Mobile hamburger toggle — minimal, accessible
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const links = document.getElementById('nav-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    // Close on link click (mobile)
+    links.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>

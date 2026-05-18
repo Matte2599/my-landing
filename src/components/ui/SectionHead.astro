@@ -1,0 +1,21 @@
+---
+interface Props {
+  num: string;
+  title: string;
+  file: string;
+}
+
+const { num, title, file } = Astro.props;
+---
+
+<div class="section-head">
+  <div class="section-head-meta">
+    <span class="section-num">/ {num}</span>
+  </div>
+  <h2>
+    <span class="section-head-bracket">[</span>
+    {title}
+    <span class="section-head-bracket">]</span>
+  </h2>
+  <span class="section-num mono">{file}</span>
+</div>

@@ -1,0 +1,36 @@
+---
+import ArrowIcon from './ArrowIcon.astro';
+
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary';
+  magnetic?: boolean;
+  magnetStrength?: number;
+  withArrow?: boolean;
+}
+
+const {
+  href,
+  variant = 'secondary',
+  magnetic = false,
+  magnetStrength = 0.25,
+  withArrow = false,
+} = Astro.props;
+
+const classes = [
+  'btn',
+  variant === 'primary' ? 'btn-primary' : '',
+  magnetic ? 'magnetic' : '',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a
+  class={classes}
+  href={href}
+  data-magnet={magnetic ? String(magnetStrength) : undefined}
+>
+  <span><slot /></span>
+  {withArrow && <ArrowIcon class="btn-arrow" />}
+</a>

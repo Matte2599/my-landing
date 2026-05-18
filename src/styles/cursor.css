@@ -1,0 +1,55 @@
+/* ============================================================
+   Custom cursor — only on devices that support hover
+   ============================================================ */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--fg);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.2s,
+    height 0.2s,
+    background 0.2s,
+    border-color 0.2s,
+    opacity 0.2s;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  background: var(--fg);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+.cursor.is-hover {
+  width: 56px;
+  height: 56px;
+  background: var(--fg);
+  mix-blend-mode: difference;
+}
+
+.cursor.is-click {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .cursor,
+  .cursor-dot {
+    display: none;
+  }
+}
