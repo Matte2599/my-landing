@@ -4,9 +4,12 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { anonymizeIntegration } from './scripts/anonymize.mjs';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
   site: 'https://feroldi.cloud',
   trailingSlash: 'ignore',
+
   i18n: {
     defaultLocale: 'it',
     locales: ['it', 'en'],
@@ -14,6 +17,7 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+
   integrations: [
     mdx(),
     sitemap({
@@ -27,12 +31,14 @@ export default defineConfig({
     // is opaque to Wappalyzer / BuiltWith.
     anonymizeIntegration(),
   ],
+
   build: {
     inlineStylesheets: 'auto',
     // Rename the chunk/asset folder to avoid the default `_astro/` fingerprint
     // that Wappalyzer / BuiltWith match for framework detection.
     assets: 'static',
   },
+
   vite: {
     build: {
       rollupOptions: {
@@ -45,4 +51,6 @@ export default defineConfig({
       },
     },
   },
+
+  adapter: cloudflare(),
 });
